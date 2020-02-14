@@ -1,0 +1,15 @@
+<div class="list-group">
+  <% City.all.each do |city| %>
+  <div class= "d-flex justify-content-between list-group-flush w-100">
+    <%= link_to "Accéder à la page de #{city.name}", city_path(city.id), :class => "list-group-item list-group-item-action " %>
+    <small> <%= city.users.length %> utilisateur(s)</small>
+    <br/>
+  </div>
+  <% end %>
+   
+</div>
+
+
+
+
+  

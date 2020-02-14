@@ -1,0 +1,83 @@
+<h1>Bienvenue sur le potin n° <%= @id %></h1>
+<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>" role="alert">
+            <%= value %>
+      </div>
+<% end %>
+<h4 class= "gossip-label">Auteur</h4>
+
+<div class= "gossip-author d-flex justify-content-around">
+  <div>
+    <%= @gossip.user.first_name %> <%= @gossip.user.last_name %><br>
+    <%= link_to "Accéder à la page de l'auteur", user_path(@gossip.user.id) %>
+  </div>
+  <% if @gossip.user.city %>
+  <div>
+  Ville: <%= @gossip.user.city.name %> <br>
+    <%= link_to "Accéder à la page de la ville #{@gossip.user.city.name}", city_path(@gossip.user.city.id) %>
+  </div>
+  <% end %>
+</div>
+<h4 class= "gossip-label">Titre</h4>
+<div class= "gossip-title">
+  <%= @gossip.title %>
+</div>
+<h4 class= "gossip-label">Contenu</h4>
+<div class= "gossip-content text-center">
+  <%= @gossip.content %>
+  <p> <%= @gossip.likes.length %> Utilisateurs aiment ça.
+  <% if !@gossip.likes.any? { |like| like.user == current_user}%>
+  <%= link_to new_like_path :id => @gossip.id do %>
+    <i class="far fa-thumbs-up"></i>
+    <% end %>
+  <% else %>
+  <% own_ar = @gossip.likes.select { |like| like.user == current_user }%>
+  <%= link_to "/likes/#{own_ar[0].id}", controller: "likes", action: "destroy", method: "delete", :id => @gossip.id do %>
+    <i class="fas fa-thumbs-up"></i>
+    <% end %>
+  <% end %>
+  </p>
+</div>
+<h4 class= "gossip-label">Date de création</h4>
+<div class= "gossip-date text-center">
+  <%= @gossip.created_at.to_formatted_s(:rfc822)  %>
+</div>
+<h4 class= "gossip-label">Commentaires</h4>
+<% @gossip.comments.each do |comment|%>
+  <div>
+    Posté le <%= comment.created_at%> par <%= link_to "#{comment.author.first_name} #{comment.author.last_name}", user_path(comment.author.id)%> 
+    <p>  <%= comment.content %></p>
+    <p> <%= comment.likes.length %> Utilisateurs aiment ça.</p>
+    <% if current_user %>
+        <% if !comment.likes.any? { |like| like.user == current_user}%>
+        <%= link_to new_like_path(:id => comment.id, :comment => "true") do %>
+        <i class="far fa-thumbs-up"></i>
+        <% end %>
+      <% else %>
+      <% own_ar = comment.likes.select { |like| like.user == current_user }%>
+      <%= link_to like_path(id: "#{own_ar[0].id}", comment: "true"), action: "destroy", method: "delete" do %>
+        <i class="fas fa-thumbs-up"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if comment.author.id == current_user.id%>
+    <%= link_to "Editer ce commentaire", edit_comment_path(comment.id), method: 'get', action: "edit", class: "btn btn-primary" %>
+    <%= link_to "Supprimer ce commentaire", comment_path(comment.id), method: 'delete', class: " btn btn-danger", 'data-confirm': "Etes-vous sur?" %>
+    <% end %>
+  </div>
+<% end %>
+<%= link_to 'Commenter', new_comment_path(gossip_id: "#{@gossip.id}"), class: "btn btn-success"%> 
+
+<h4 class= "gossip-label">Tags</h4>
+<div class= "gossip-tag text-center">
+  <% @gossip.tags.each do |tag|  %>
+  <%= tag.title %><br>
+  <% end %>
+</div>
+<h4 class= "gossip-label">Actions</h4>
+<div class= "gossip-tag text-center">
+ <% if @gossip.user.id == current_user.id%>
+  <%= link_to "Editer ce potin", edit_gossip_path(@gossip.id), class: "btn btn-primary" %>
+  <%= link_to "Supprimer ce potin", gossip_path(@gossip.id), class: "btn btn-danger", 'data-confirm': "Etes-vous sur?", 'data-method': "DELETE"  %>
+  <% end %>
+</div>

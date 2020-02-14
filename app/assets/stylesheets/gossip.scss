@@ -1,0 +1,13 @@
+// Place all the styles related to the gossip controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.jumbotron {
+  background-image: asset-data-url("gossip-image.jpg");
+  background-size: cover;
+  background-position: 0% 35%;
+  background-repeat: no-repeat;
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.1em;
+  // height: 100%;
+  // min-height: 300px;
+}

@@ -1,0 +1,28 @@
+<h1>Bienvenue sur la liste des potins!</h1>
+
+<% if params["success"] %>
+<div class="alert alert-success" role="alert">
+  Votre potin a bien été enregistré!
+</div>
+<% end%>
+
+<%= link_to "Postez un nouveau potin !", new_gossip_path %>
+<div class= "index-box">
+
+<% @gossips.each do |gossip|%>
+
+
+<div class="card index-element  mb-2" style="width: 18rem;">
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title text-center"><%= gossip.title %></h5>
+    <h6 class="card-subtitle mb-2 text-muted text-center"><%= gossip.user.first_name %> <%= gossip.user.last_name %></h6>
+    <p class="card-text text-left"><%= gossip.content %></p>
+    <div class= "mt-auto">
+    <div class= "card-link text-center"><%= link_to "Accéder à la page du gossip", gossip_path(gossip.id) %></div>
+    <div class= "card-link text-center"><%= link_to "Accéder à la page de l'auteur", user_path(gossip.user.id) %></div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+</div>

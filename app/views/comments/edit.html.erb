@@ -1,0 +1,21 @@
+<h1>Editer un commentaire !</h1>
+
+<div class= "post-new-gossip">
+<h4>Editez ce commentaire</h4>
+  <% if @errors%>
+  <% @errors.messages.each do |message|%>
+  <div class="alert alert-danger" role="alert">
+  Le champ <%= message[0] %> a le problème suivant: <%= message[1][0] %>
+  </div>
+    <% end%>
+  <% end %>
+  <%= form_for @comment, action: "update" do |f| %>
+    <div class= "form-group">
+      <label>Contenu du commentaire</label>
+      <%= f.text_area :content, class: "form-control", placeholder: "#{@comment.content}" %>
+    </div>
+    <div class= "form-group">
+      <button type= "submit" class="btn btn-primary">Modifier le commentaire</button>
+    </div>
+    <% end %>
+</div>

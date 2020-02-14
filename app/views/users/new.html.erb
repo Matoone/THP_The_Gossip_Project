@@ -1,0 +1,54 @@
+<h1>Inscription</h1>
+
+<div>
+<h4>Formulaire d'inscription</h4>
+  <% if @errors%>
+  <% @errors.messages.each do |message|%>
+  <div class="alert alert-danger" role="alert">
+  Le champ <%= message[0] %> a le problème suivant: <%= message[1][0] %>
+  </div>
+    <% end%>
+  <% end %>
+  <%= form_for @user do |f|%>
+  <div class="form-group">
+      <label>Prénom</label>
+      <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+   <div class="form-group">
+      <label>Nom</label>
+      <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+      <label>Description</label>
+      <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+      <label>Age</label>
+      <%= f.text_field :age, class: 'form-control' %>
+  </div>
+    <div class="form-group">
+      <label>Email</label>
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <label>Confirmation du password</label>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <button type="submit" class= "btn btn-primary">Envoyer</button>
+    </div>
+    <% end %>
+</div>
+
+
+t.string "first_name"
+    t.string "last_name"
+    t.text "description"
+    t.string "email"
+    t.integer "age"
+    t.bigint "city_id"

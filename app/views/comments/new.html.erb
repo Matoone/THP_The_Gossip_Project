@@ -1,0 +1,22 @@
+<h1>Poster un commentaire !</h1>
+
+<div class= "post-new-gossip">
+<h4>Postez un nouveau commentaire</h4>
+  <% if @errors%>
+  <% @errors.messages.each do |message|%>
+  <div class="alert alert-danger" role="alert">
+  Le champ <%= message[0] %> a le problème suivant: <%= message[1][0] %>
+  </div>
+    <% end%>
+  <% end %>
+  <%= form_tag url_for(action: 'create'), method: "post" do %>
+  
+  <% content = ''%>
+  <%= label_tag 'Contenu' %>
+      <%= text_area_tag 'content', content %>
+      <br /> <br />
+    <%= hidden_field(:gossip, :id)%>
+  <%= submit_tag "Create Post" %>
+
+    <% end %>
+</div>
