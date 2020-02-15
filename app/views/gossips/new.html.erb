@@ -21,7 +21,6 @@
   <%= label_tag 'Tag'%>
     <%= select_tag "tag", options_from_collection_for_select(@tags, "id", "title"), include_blank: true %>
     
-    <%# <%= select_tag 'tags[]', options_from_collection_for_select(@tags, "id", "title", [4,5,6]), multiple: true, size: '100%' %>
   <%= submit_tag "Create Post" %>
 
     <% end %>

@@ -12,7 +12,7 @@ class GossipsController < ApplicationController
 
   def new
     
-    @tags = Tag.all.to_a
+    @tags = Tag.all
   end
 
   def create
@@ -30,6 +30,7 @@ class GossipsController < ApplicationController
       redirect_to gossips_path
     else
       @errors = @gossip.errors
+      @tags = Tag.all
       render :new
     end
   end
